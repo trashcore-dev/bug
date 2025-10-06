@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Trashcore Dominator</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: url('https://e.top4top.io/p_3465k1hhy1.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+      overflow-x: hidden;
+    }
+
+    .container {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 80px 20px 60px 20px;
+    }
+
+    #login-container, #main-app, #result-page {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px;
+      background-color: rgba(10, 10, 20, 0.75);
+      border-radius: 18px;
+      width: 90%;
+      max-width: 420px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(4px);
+    }
+
+    .active {
+      display: flex !important;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px;
+      margin: 12px 0;
+      font-size: 16px;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(0, 0, 0, 0.4);
+      color: white;
+      box-sizing: border-box;
+    }
+
+    input::placeholder {
+      color: #aaa;
+    }
+
+    button {
+      padding: 13px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+      color: white;
+      cursor: pointer;
+      width: 100%;
+      font-weight: 600;
+      transition: transform 0.2s, opacity 0.2s;
+    }
+
+    button:hover {
+      opacity: 0.9;
+      transform: translateY(-2px);
+    }
+
+    .button-group {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      width: 100%;
+      margin-top: 16px;
+    }
+
+    .anim-text {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 38px;
+      font-weight: 800;
+      background: linear-gradient(90deg, #8e2de2, #4a00e0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 12px rgba(142, 45, 226, 0.7), 0 0 24px rgba(74, 0, 224, 0.6);
+      opacity: 0;
+      transition: opacity 0.8s ease, transform 0.8s ease;
+      z-index: 1002;
+    }
+
+    .anim-text.show {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1.05);
+    }
+
+    .hamburger {
+      background: none;
+      border: none;
+      font-size: 26px;
+      color: white;
+      cursor: pointer;
+      padding: 4px 8px;
+    }
+
+    #menu {
+      display: none;
+      margin-top: 8px;
+    }
+
+    #menu button {
+      background: linear-gradient(to right, #ff416c, #ff4b2b);
+      font-size: 14px;
+      padding: 8px 16px;
+      border-radius: 8px;
+      width: auto;
+      margin-top: 6px;
+    }
+
+    .fixed-title {
+      position: fixed;
+      top: 12px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      z-index: 1000;
+      font-size: 22px;
+      font-weight: 700;
+      color: white;
+      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+    }
+
+    .fixed-menu {
+      position: fixed;
+      top: 12px;
+      left: 12px;
+      z-index: 1001;
+    }
+
+    .result-box {
+      text-align: center;
+      font-size: 19px;
+      font-weight: 600;
+      margin-bottom: 24px;
+      line-height: 1.5;
+    }
+
+    .footer {
+      position: fixed;
+      bottom: 12px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-size: 14px;
+      color: #ddd;
+      z-index: 999;
+      line-height: 1.4;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.7);
+    }
+
+    h2 {
+      margin: 10px 0 20px 0;
+      font-size: 24px;
+      color: #e0e0ff;
+    }
+  </style>
+</head>
+<body>
+  <!-- Welcome Animation -->
+  <div class="anim-text" id="welcome-anim">WELCOME Bro</div>
+
+  <div class="container">
+    <!-- LOGIN -->
+    <div id="login-container" class="active">
+      <input type="text" id="username" placeholder="Enter Username">
+      <input type="password" id="password" placeholder="Enter Password">
+      <button onclick="login()">Login</button>
+    </div>
+
+    <!-- MAIN APP -->
+    <div id="main-app">
+      <div class="fixed-title">Trash Bug Site</div>
+      <div class="fixed-menu">
+        <button class="hamburger" onclick="toggleMenu()">☰</button>
+        <div id="menu">
+          <button onclick="logout()">Log out</button>
+        </div>
+      </div>
+
+      <h2>Bug Sender</h2>
+      <input type="text" id="target" placeholder="Enter target number (e.g. 254xxxx)">
+      <div class="button-group">
+        <button onclick="sendCrash('Trash Ios')">Force Close ios</button>
+        <button onclick="sendCrash('Trash Beta')">Android Delay</button>
+        <button onclick="sendCrash('Trash Freeze')">Android freezer</button>
+      </div>
+    </div>
+
+    <!-- RESULT PAGE -->
+    <div id="result-page">
+      <div class="result-box" id="result-text"></div>
+      <button onclick="backToMain()">Back to Main Page</button>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    Server Status: <span style="color: #4cff88;">Online</span><br>
+    Developer: <strong>Trashcore</strong>
+  </div>
+
+  <script>
+    const correctUser = "trashx";
+    const correctPass = "trashcore";
+
+    function login() {
+      const user = document.getElementById("username").value.trim();
+      const pass = document.getElementById("password").value.trim();
+
+      if (user === correctUser && pass === correctPass) {
+        localStorage.setItem("loggedIn", "true");
+        document.getElementById("login-container").classList.remove("active");
+        const welcome = document.getElementById("welcome-anim");
+        welcome.classList.add("show");
+
+        setTimeout(() => {
+          welcome.style.display = "none";
+          document.getElementById("main-app").classList.add("active");
+        }, 3000);
+      } else {
+        alert("Incorrect username or password!");
+      }
+    }
+
+    function sendCrash(type) {
+      const target = document.getElementById("target").value.trim();
+      if (!/^[0-9]+$/.test(target)) {
+        alert("Numbers only! Example: 254xxxx");
+        return;
+      }
+
+      document.getElementById("main-app").classList.remove("active");
+      document.getElementById("result-page").classList.add("active");
+
+      document.getElementById("result-text").innerHTML =
+        `✅ Success Crash by Trashcore<br>🧨 Type: ${type}<br>📞 Target: ${target}`;
+
+      const voice = new SpeechSynthesisUtterance("Success Crash by TrashDominion");
+      voice.lang = "en-US";
+      speechSynthesis.speak(voice);
+    }
+
+    function backToMain() {
+      document.getElementById("result-page").classList.remove("active");
+      document.getElementById("main-app").classList.add("active");
+      document.getElementById("target").value = "";
+    }
+
+    function toggleMenu() {
+      const menu = document.getElementById("menu");
+      menu.style.display = menu.style.display === "block" ? "none" : "block";
+    }
+
+    function logout() {
+      localStorage.removeItem("loggedIn");
+      document.getElementById("main-app").classList.remove("active");
+      document.getElementById("result-page").classList.remove("active");
+      document.getElementById("login-container").classList.add("active");
+      document.getElementById("welcome-anim").style.display = "block";
+    }
+
+    window.onload = () => {
+      if (localStorage.getItem("loggedIn") === "true") {
+        document.getElementById("login-container").classList.remove("active");
+        document.getElementById("main-app").classList.add("active");
+        document.getElementById("welcome-anim").style.display = "none";
+      }
+    }
+  </script>
+</body>
+</html>
