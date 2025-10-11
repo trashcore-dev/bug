@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>trashcore-system</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+    }
+    body {
+      background: linear-gradient(135deg, #6a0dad, #8a2be2);
+      color: white;
+      line-height: 1.6;
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+    }
+    header {
+      text-align: center;
+      padding: 4rem 1.5rem 3rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    h1 {
+      font-size: 2.8rem;
+      margin-bottom: 1rem;
+      text-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    }
+    .subtitle {
+      font-size: 1.2rem;
+      opacity: 0.95;
+      margin-bottom: 2rem;
+    }
+    .github-actions {
+      display: flex;
+      justify-content: center;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+      margin: 1.5rem 0;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.85rem 1.7rem;
+      border-radius: 10px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      font-size: 1.05rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    }
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.35);
+    }
+    .btn-fork {
+      background: white;
+      color: #6a0dad;
+    }
+    .btn-star {
+      background: #ffdf00;
+      color: #000;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 2rem auto;
+      padding: 0 1.5rem 2rem;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 2.2rem;
+      font-size: 2rem;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.8rem;
+    }
+    .card {
+      background: #0f0f0f;
+      border-radius: 16px;
+      padding: 1.8rem 1.2rem;
+      text-align: center;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+      transition: transform 0.3s, box-shadow 0.3s;
+      color: white;
+      border: 1px solid #333;
+    }
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 30px rgba(139, 0, 255, 0.3);
+    }
+    .card i {
+      margin-bottom: 1rem;
+      font-size: 2.2rem;
+    }
+    .card h3 {
+      margin: 1rem 0 0.75rem;
+      font-size: 1.3rem;
+    }
+    .card p {
+      color: #bbb;
+      font-size: 0.95rem;
+      margin-bottom: 1.2rem;
+    }
+    .deploy-btn {
+      display: inline-block;
+      padding: 0.65rem 1.4rem;
+      background: #8a2be2;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: background 0.3s, transform 0.2s;
+    }
+    .deploy-btn:hover {
+      background: #7a1bd2;
+      transform: scale(1.03);
+    }
+    .heroku-btn { background: #430098 !important; }
+    .heroku-btn:hover { background: #35007a !important; }
+    .scan-btn { background: #e63946 !important; }
+    .scan-btn:hover { background: #d62839 !important; }
+
+    /* Stats Section */
+    .stats {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+      margin-top: 3rem;
+      padding: 2rem;
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 16px;
+      backdrop-filter: blur(6px);
+    }
+    .stat-item {
+      text-align: center;
+      min-width: 140px;
+    }
+    .stat-value {
+      font-size: 2.2rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+      color: white;
+    }
+    .stat-label {
+      font-size: 1rem;
+      opacity: 0.85;
+    }
+
+    /* Last Updated */
+    .last-updated {
+      text-align: center;
+      margin-top: 2rem;
+      font-size: 1.1rem;
+      opacity: 0.9;
+    }
+
+    /* Community Section */
+    .community {
+      margin-top: 3rem;
+    }
+    .community h2 {
+      margin-bottom: 1.8rem;
+    }
+    .social-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+    }
+    .social-card {
+      background: #0f0f0f;
+      border-radius: 14px;
+      padding: 1.5rem;
+      text-align: center;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+      transition: transform 0.3s;
+      border: 1px solid #333;
+    }
+    .social-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 10px 25px rgba(139, 0, 255, 0.4);
+    }
+    .social-card i {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+    .yt { color: #ff0000; }
+    .wa { color: #25D366; }
+    .tg { color: #0088cc; }
+    .chat { color: #25D366; }
+
+    /* Red Wave at Bottom */
+    .wave {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 120px;
+      background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1200 120" xmlns="http://www.w3.org/2000/svg" fill="%23e63946" preserveAspectRatio="none"><path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25"/><path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,45.49,54.27,22.05,109.09,42.2,166.69,41.23C1132.5,102.37,1200,68.15,1200,0V0Z" opacity=".5"/><path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81C1199,0,1200,0,1200,0V0Z"/></svg>');
+      background-size: cover;
+      z-index: 10;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1.5rem;
+      color: rgba(255,255,255,0.85);
+      font-size: 0.95rem;
+      position: relative;
+      z-index: 20;
+    }
+    footer a {
+      color: white;
+      text-decoration: underline;
+    }
+
+    @media (max-width: 600px) {
+      .github-actions {
+        flex-direction: column;
+        align-items: center;
+      }
+      h1 {
+        font-size: 2.2rem;
+      }
+      .cards, .social-cards {
+        grid-template-columns: 1fr;
+      }
+      .stats {
+        gap: 1.2rem;
+      }
+      .stat-value {
+        font-size: 1.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>🚀 𝗧𝗥𝗔𝗦𝗛𝗖𝗢𝗥𝗘-𝗠𝗗</h1>
+    <p class="subtitle">Scan, deploy, and dominate our system with one click!</p>
+    
+    <div class="github-actions">
+      <a href="https://github.com/Tennor-modz/trashcore-system/fork" class="btn btn-fork" target="_blank">
+        <i class="fas fa-code-branch"></i> Fork Repository
+      </a>
+      <a href="https://github.com/Tennor-modz/trashcore-system" class="btn btn-star" target="_blank">
+        <i class="fas fa-star"></i> Star Repository
+      </a>
+    </div>
+  </header>
+
+  <div class="container">
+    <h2>🌐 Deploy, Host & Authenticate</h2>
+    <div class="cards">
+      
+      <div class="card">
+        <i class="fas fa-qrcode" style="color: #e63946;"></i>
+        <h3>Scan Session ID</h3>
+        <p>Purposely for Heroku deployment.</p>
+        <a href="https://trashcore-pairing-2.onrender.com/pair" class="deploy-btn scan-btn" target="_blank">
+          Scan Now
+        </a>
+      </div>
+
+      <div class="card">
+        <i class="fab fa-heroku" style="color: #430098;"></i>
+        <h3>Heroku</h3>
+        <p>Deploy to Heroku with one click.</p>
+        <a href="https://heroku.com/deploy?template=https://github.com/Tennor-modz/trashcore-system" 
+           class="deploy-btn heroku-btn" target="_blank">
+          Deploy
+        </a>
+      </div>
+
+      <div class="card">
+        <i class="fas fa-robot" style="color: #5865F2;"></i>
+        <h3>Bot Hosting</h3>
+        <p>Host your bot 24/7.</p>
+        <a href="https://bot-hosting.net" class="deploy-btn" target="_blank">
+          Host Now
+        </a>
+      </div>
+
+      <div class="card">
+        <i class="fas fa-link" style="color: #28a745;"></i>
+        <h3>OptiLink</h3>
+        <p>Deploy using OptiLink service.</p>
+        <a href="https://optiklink.com/home" class="deploy-btn" target="_blank">
+          Deploy
+        </a>
+      </div>
+
+      <div class="card">
+        <i class="fas fa-server" style="color: #fd7e14;"></i>
+        <h3>Daki Hosting</h3>
+        <p>Lightning-fast hosting by Daki.</p>
+        <a href="https://dash.daki.cc/" class="deploy-btn" target="_blank">
+          Host Now
+        </a>
+      </div>
+
+      <div class="card">
+        <i class="fas fa-qrcode" style="color: #e63946;"></i>
+        <h3>Pair Mini Bot</h3>
+        <p>Scan to link your session with Mini Bot on Heroku.</p>
+        <a href="https://minibot-7vi4.onrender.com" class="deploy-btn scan-btn" target="_blank">
+          Pair Now
+        </a>
+      </div>
+      
+    </div>
+
+    <!-- ✨ Stats Section -->
+    <div class="stats">
+      <div class="stat-item">
+        <div class="stat-value" id="bots-deployed">--</div>
+        <div class="stat-label">Bots Deployed</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value" id="forks-count">--</div>
+        <div class="stat-label">Forks</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value" id="contributors-count">--</div>
+        <div class="stat-label">Contributors</div>
+      </div>
+    </div>
+
+    <!-- 🕒 Last Updated -->
+    <div class="last-updated">
+      <i class="fas fa-history"></i> Last updated: <span id="last-commit">loading...</span>
+    </div>
+
+    <!-- 🌐 Community & Support -->
+    <div class="community">
+      <h2>💬 Stay Connected</h2>
+      <div class="social-cards">
+        <div class="social-card">
+          <i class="fab fa-youtube yt"></i>
+          <h3>YouTube</h3>
+          <p>Subscribe for tutorials & updates</p>
+          <a href="https://youtube.com/@giddytennor?si=z9uQ03B09guibsNa" class="deploy-btn" target="_blank">Subscribe</a>
+        </div>
+        <div class="social-card">
+          <i class="fab fa-whatsapp wa"></i>
+          <h3>WhatsApp Channel</h3>
+          <p>Get announcements & news</p>
+          <a href="https://whatsapp.com/channel/0029VafrbsKG8l5EFBDDCy41" class="deploy-btn" target="_blank">Follow</a>
+        </div>
+        <div class="social-card">
+          <i class="fab fa-whatsapp wa"></i>
+          <h3>WhatsApp Group</h3>
+          <p>Chat with other users</p>
+          <a href="https://chat.whatsapp.com/CzFlFQrkdzxFw0pxCBYM7H?mode=wwt" class="deploy-btn" target="_blank">Join Group</a>
+        </div>
+        <div class="social-card">
+          <i class="fab fa-telegram tg"></i>
+          <h3>Telegram</h3>
+          <p>Join our official channel</p>
+          <a href="https://t.me/trashcoresystem" class="deploy-btn" target="_blank">Join</a>
+        </div>
+        <div class="social-card">
+          <i class="fas fa-comments chat"></i>
+          <h3>Chat Creator</h3>
+          <p>Message the developer directly</p>
+          <a href="https://wa.me/254703726139" class="deploy-btn" target="_blank">WhatsApp Me</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wave"></div>
+
+  <footer>
+    <p>Secure • Open Source • Made with ❤️ | <a href="https://github.com/Tennor-modz/trashcore-system" target="_blank">GitHub</a></p>
+  </footer>
+
+  <script>
+    const GITHUB_USER = 'Tennor-modz';
+    const GITHUB_REPO = 'trashcore-system';
+
+    // Stats
+    document.getElementById('bots-deployed').textContent = '1,247';
+
+    fetch(`https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}`)
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById('forks-count').textContent = data.forks_count?.toLocaleString() || '0';
+      })
+      .catch(() => document.getElementById('forks-count').textContent = '—');
+
+    fetch(`https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contributors?per_page=100`)
+      .then(res => res.ok ? res.json() : [])
+      .then(data => {
+        document.getElementById('contributors-count').textContent = data.length.toLocaleString();
+      })
+      .catch(() => document.getElementById('contributors-count').textContent = '—');
+
+    // Last Commit Date
+    fetch(`https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/commits`)
+      .then(res => res.json())
+      .then(commits => {
+        if (commits && commits[0]?.commit?.author?.date) {
+          const date = new Date(commits[0].commit.author.date);
+          const formatted = date.toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric'
+          });
+          document.getElementById('last-commit').textContent = formatted;
+        } else {
+          document.getElementById('last-commit').textContent = 'unknown';
+        }
+      })
+      .catch(() => {
+        document.getElementById('last-commit').textContent = 'error';
+      });
+  </script>
+</body>
+</html>
